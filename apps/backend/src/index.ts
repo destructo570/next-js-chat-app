@@ -1,21 +1,17 @@
 import express from "express";
-import WebSocket, { WebSocketServer } from "ws";
+import bodyParser from "body-parser";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes";
+// import WebSocket, { WebSocketServer } from "ws";
+
 
 const app = express();
-const httpServer = app.listen(8080);
+app.use(cors())
+const port = 8080;
+app.use(bodyParser.json());
 
-const wss = new WebSocketServer({ server: httpServer });
+app.use('/api/v1/users', userRoutes);
 
-wss.on("connection", function connection(ws) {
-  ws.on("error", console.error);
-
-  ws.on("message", function message(data, isBinary) {
-    wss.clients.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(data, { binary: isBinary });
-      }
-    });
-  });
-
-  ws.send("Hello! Message From Server!!");
+const httpServer = app.listen(port, () => {
+  console.log(`Server running at ${port}`);
 });
