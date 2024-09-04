@@ -1,10 +1,9 @@
-import { ResponsiveGroupChatApp } from "@/components/responsive-group-chat-app";
-import Image from "next/image";
+import { ChatComponent } from "@/components/chat/ChatComponent";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <ResponsiveGroupChatApp/>
+      <ChatComponent/>
     </main>
   );
 }
